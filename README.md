@@ -30,7 +30,7 @@ Stay tuned for initial features, beta releases, and documentation.
 CMSium is **proprietary software**.  
 Any usage, reproduction, modification, or distribution requires **explicit permission** from the author.
 
-➡️ See [`LICENSE.txt`](LICENSE.txt) for full legal terms.  
+➡️ See [`LICENSE.txt`](license.txt) for full legal terms.  
 To request a commercial license: [Contact visualAngus](https://github.com/visualAngus)
 
 ---
