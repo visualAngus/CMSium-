@@ -1,0 +1,13 @@
+CMSium - Licence d'utilisation
+
+Copyright © 2025 visualAngus. Tous droits réservés.
+
+Le logiciel CMSium est un logiciel propriétaire. Il est interdit de copier, utiliser, distribuer, modifier ou intégrer tout ou partie de ce logiciel sans l'autorisation écrite préalable de l'auteur.
+
+Toute utilisation, qu'elle soit personnelle, éducative ou commerciale, requiert une licence formelle octroyée par l’auteur.
+
+Vous pouvez contacter l’auteur pour une demande de licence à l’adresse suivante : [ton adresse mail ou lien de contact]
+
+Ce logiciel est fourni "en l'état", sans aucune garantie, explicite ou implicite.
+
+Fichier version : 1.0 – Mis à jour le 15 mai 2025
