@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Bijouterie Élégance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/css.css">
+    
+</head>
+<body>
+    <header>
+        <h1>Bijouterie Élégance</h1>
+        <nav>
+            <a href="#accueil">Accueil</a>
+            <a href="#collections">Collections</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+    <section class="hero" id="accueil">
+        <h2>Des bijoux uniques pour des moments précieux</h2>
+        <p>Découvrez nos créations artisanales en or, argent et pierres précieuses.</p>
+        <button class="btn" onclick="scrollToSection('collections')">Voir nos collections</button>
+    </section>
+    <section class="section" id="collections">
+        <h2 style="text-align:center; color:#bfa14a;">Nos Collections</h2>
+        <div class="products">
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80" alt="Bague Or">
+                <h3>Bague Or & Diamant</h3>
+                <p>Élégance intemporelle, sertie de diamants étincelants.</p>
+                <div class="price">1 200 €</div>
+                <button class="btn" onclick="alert('Merci pour votre intérêt !')">En savoir plus</button>
+            </div>
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Collier Perle">
+                <h3>Collier Perle Blanche</h3>
+                <p>Perles naturelles montées sur or blanc 18 carats.</p>
+                <div class="price">850 €</div>
+                <button class="btn" onclick="alert('Merci pour votre intérêt !')">En savoir plus</button>
+            </div>
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Bracelet Argent">
+                <h3>Bracelet Argent Massif</h3>
+                <p>Design moderne et raffiné, finition polie miroir.</p>
+                <div class="price">320 €</div>
+                <button class="btn" onclick="alert('Merci pour votre intérêt !')">En savoir plus</button>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="contact">
+        <h2 style="text-align:center; color:#bfa14a;">Contactez-nous</h2>
+        <form style="max-width:400px;margin:0 auto;text-align:center;">
+            <input type="text" placeholder="Votre nom" required style="width:90%;padding:10px;margin:8px 0;border-radius:6px;border:1px solid #ccc;">
+            <input type="email" placeholder="Votre email" required style="width:90%;padding:10px;margin:8px 0;border-radius:6px;border:1px solid #ccc;">
+            <textarea placeholder="Votre message" required style="width:90%;padding:10px;margin:8px 0;border-radius:6px;border:1px solid #ccc;min-height:80px;"></textarea>
+            <br>
+            <button class="btn" type="submit" onclick="event.preventDefault();alert('Message envoyé !')">Envoyer</button>
+        </form>
+    </section>
+    <footer>
+        &copy; 2024 Bijouterie Élégance - Tous droits réservés
+    </footer>
+    <script>
+        // --- JS pour scroll fluide ---
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+        // Optionnel: effet sur navigation
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    scrollToSection(href.substring(1));
+                }
+            });
+        });
+    </script>
+</body>
+</html>

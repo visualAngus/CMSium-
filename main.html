@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chargeur HTML intelligent</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@300;400;500;600;700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <h1>Chargeur dynamique</h1>
+    <input type="text" id="htmlPath" placeholder="Ex : page.html">
+    <button onclick="loadHtml()">Charger</button>
+
+    <main>
+        <div class="div_control_bar_l">
+        </div>
+        <div id="content"></div>
+        <div class="div_control_bar_r">
+            <div class="div_header">
+                <h2>Éditeur de style</h2>
+                <div class="div_selector_menu">
+                    <button class="fixed_button">Lock</button>
+                </div>
+            </div>
+            <div class="div_separator"></div>
+            <div class="div_modif_param">
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let activ_element = null;
+
+        // focntion pour recupérer tout le style de l'élément actif
+        function getActiveElementStyles() {
+            if (!activ_element) return {};
+            const styles = window.getComputedStyle(activ_element);
+            // Liste des propriétés CSS intéressantes à extraire
+            const interestingProps = [
+            "color",
+            "background-color",
+            "font-size",
+            "font-family",
+            "font-weight",
+            "font-style",
+            "text-align",
+            "text-decoration",
+            "border",
+            "border-radius",
+            "padding",
+            "margin",
+            "width",
+            "height",
+            "display",
+            "position",
+            "top",
+            "left",
+            "right",
+            "bottom",
+            "box-shadow",
+            "opacity",
+            "overflow"
+            ];
+            const styleObj = {};
+            interestingProps.forEach(prop => {
+            styleObj[prop] = styles.getPropertyValue(prop);
+            });
+            return styleObj;
+        }
+
+
+        async function loadHtml() {
+            const path = document.getElementById('htmlPath').value;
+            if (!path) return alert("Donne un chemin de fichier HTML.");
+            // get folder path of the path
+            const folderPath = "./" + path.substring(0, path.lastIndexOf('/') + 1);
+
+            try {
+                const response = await fetch(path);
+                if (!response.ok) throw new Error("Fichier introuvable.");
+
+                const htmlText = await response.text();
+
+                // Crée un DOM temporaire pour parser le HTML
+                const temp = document.createElement('html');
+                temp.innerHTML = htmlText;
+
+                // Charge les fichiers CSS
+                temp.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && !document.querySelector(`link[href="${href}"]`)) {
+                        const newLink = document.createElement('link');
+                        newLink.rel = 'stylesheet';
+                        newLink.href = folderPath + href;
+                        document.head.appendChild(newLink);
+                    }
+                });
+
+                // Charge les scripts JS
+                temp.querySelectorAll('script[src]').forEach(script => {
+                    const src = script.getAttribute('src');
+                    if (src && !document.querySelector(`script[src="${src}"]`)) {
+                        const newScript = document.createElement('script');
+                        newScript.src = folderPath + src;
+                        document.body.appendChild(newScript);
+                    }
+                });
+
+                // Injecte le corps du HTML sans les balises <head>, <html>, etc.
+                const bodyContent = temp.querySelector('body') || temp;
+                document.getElementById('content').innerHTML = bodyContent.innerHTML;
+                // Added to make all imported elements editable
+                // Rendre tout éditable, y compris le texte des boutons
+                const contentDiv = document.getElementById('content');
+                // contentDiv.contentEditable = true;
+                
+                contentDiv.querySelectorAll('*').forEach(el => {
+                    el.classList.add('editable_modif_class');
+                    el.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        this.contentEditable = this.contentEditable === 'true' ? 'false' : 'true';
+                        this.focus();
+                        activ_element = this; // Met à jour l'élément actif
+                        console.log(getActiveElementStyles());
+                        
+                    });
+                    el.addEventListener('blur', function () {
+                        this.contentEditable = 'false'; // Désactive l'édition à la perte de focus
+                        activ_element = null; // Réinitialise l'élément actif
+                    });
+                });
+                
+
+            } catch (e) {
+                console.error(e);
+                alert("Erreur lors du chargement.");
+            }
+        }
+    </script>
+</body>
+
+</html>
